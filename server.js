@@ -7,7 +7,7 @@ const proto = grpc.loadPackageDefinition(packageDefinition).o2bookkeeping;
 const server = new grpc.Server();
 server.addService(proto.KeyValueService.service, {
   UpdateValues: (call, response) => {
-    console.log(call.request);
+    console.log(call.request.kv);
     response(null, null);
   }
 });
