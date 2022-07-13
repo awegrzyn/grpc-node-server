@@ -1,0 +1,18 @@
+syntax = 'proto3';
+
+package o2bookkeeping;
+
+service KeyValueService {
+  rpc UpdateValues(KeyValueList) returns (Empty) {}
+}
+
+message Empty {}
+
+message KeyValue {
+  string key = 1;
+  string value = 2;
+}
+
+message KeyValueList {
+  repeated KeyValue kv = 1;
+}
