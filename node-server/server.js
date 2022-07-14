@@ -1,6 +1,6 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const packageDefinition = protoLoader.loadSync('./kv.proto', {});
+const packageDefinition = protoLoader.loadSync('./../proto/kv.proto', {});
 const proto = grpc.loadPackageDefinition(packageDefinition).o2bookkeeping;
 
 
@@ -8,6 +8,10 @@ const server = new grpc.Server();
 server.addService(proto.KeyValueService.service, {
   UpdateValues: (call, response) => {
     console.log(call.request.kv);
+    response(null, null);
+  },
+  UpdateValue: (call, response) => {
+    console.log(call.request);
     response(null, null);
   }
 });

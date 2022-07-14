@@ -4,6 +4,7 @@ package o2bookkeeping;
 
 service KeyValueService {
   rpc UpdateValues(KeyValueList) returns (Empty) {}
+  rpc UpdateValue(KeyValue) returns (Empty) {}
 }
 
 message Empty {}

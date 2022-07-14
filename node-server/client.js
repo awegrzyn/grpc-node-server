@@ -1,6 +1,6 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const packageDefinition = protoLoader.loadSync('./kv.proto', {});
+const packageDefinition = protoLoader.loadSync('./../proto/kv.proto', {});
 const proto = grpc.loadPackageDefinition(packageDefinition).o2bookkeeping;
 
 const client = new proto.KeyValueService('127.0.0.1:50051', grpc.credentials.createInsecure());
