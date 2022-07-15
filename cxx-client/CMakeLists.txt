@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 
 project(BookkeepingApi
-  VERSION 0.0.1
-  LANGUAGES CXX 
+    VERSION 0.0.1
+    LANGUAGES CXX
 )
 
 find_package(Protobuf CONFIG REQUIRED)
@@ -23,7 +23,9 @@ set(GRPC_CPP_OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PROTO_OUTPUT_NAME}.grpc.pb.cc)
 add_custom_command(
     OUTPUT "${PROTO_CPP_OUTPUT}"
     COMMAND protobuf::protoc
-    ARGS --proto_path ${PROTO_FILE_PREFIX} --cpp_out ${CMAKE_CURRENT_BINARY_DIR} ${PROTO_OUTPUT_NAME}.proto
+    ARGS --proto_path ${PROTO_FILE_PREFIX}
+         --cpp_out ${CMAKE_CURRENT_BINARY_DIR}
+         ${PROTO_OUTPUT_NAME}.proto
     DEPENDS ${PROTO_FILE}
     COMMENT "Running protoc on ${PROTO_FILE}"
     VERBATIM)
@@ -31,9 +33,12 @@ add_custom_command(
 add_custom_command(
     OUTPUT "${GRPC_CPP_OUTPUT}"
     COMMAND protobuf::protoc
-    ARGS --proto_path ${PROTO_FILE_PREFIX} --grpc_out=${CMAKE_CURRENT_BINARY_DIR} --plugin=protoc-gen-grpc=$<TARGET_FILE:gRPC::grpc_cpp_plugin> ${PROTO_OUTPUT_NAME}.proto
+    ARGS --proto_path ${PROTO_FILE_PREFIX}
+         --grpc_out=${CMAKE_CURRENT_BINARY_DIR}
+         --plugin=protoc-gen-grpc=$<TARGET_FILE:gRPC::grpc_cpp_plugin>
+         ${PROTO_OUTPUT_NAME}.proto
     DEPENDS ${PROTO_FILE}
-    COMMENT "Running gRPC/protoc on ${PROTO_FILE}"
+    COMMENT "Running protoc/gRPC on ${PROTO_FILE}"
     VERBATIM)
 
 set(example client.cxx)
@@ -41,8 +46,8 @@ get_filename_component(example_name ${example} NAME)
 string(REGEX REPLACE ".cxx" "" example_name ${example_name})
 add_executable(${example_name} ${example} ${PROTO_CPP_OUTPUT} ${GRPC_CPP_OUTPUT})
 target_link_libraries(${example_name} PRIVATE
-  gRPC::grpc++
-  protobuf::libprotobuf
+    gRPC::grpc++
+    protobuf::libprotobuf
 )   
 target_include_directories(${example_name} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 install(TARGETS ${example_name})
