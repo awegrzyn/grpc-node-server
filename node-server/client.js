@@ -9,6 +9,6 @@ client.UpdateValues({kv: [{key: 'key1', value: 'value1'}, {key: 'key2', value: '
  if (err) {
     console.log(err);
   } else {
-    console.log(JSON.stringify(response));
+    console.log(response);
   }
 });
