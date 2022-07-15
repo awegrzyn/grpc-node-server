@@ -21,6 +21,6 @@ server.addService(proto.KeyValueService.service, {
 });
 
 server.bindAsync('127.0.0.1:50051', grpc.ServerCredentials.createInsecure(), () => {
-	console.log('Server is running with options', options);
-	server.start();
+  console.log('Server is running with options', options);
+  server.start();
 });
